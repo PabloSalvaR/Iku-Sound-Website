@@ -12,8 +12,7 @@ Thumbs.db
 # Wrangler / Cloudflare
 .wrangler/
 
-# Node / Herramientas
+# Node / Herramientas JS (por si usás npm más adelante)
 node_modules/
 dist/
-build/
-.codex/
+build

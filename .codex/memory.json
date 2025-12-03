@@ -1,0 +1,19 @@
+﻿[
+    {
+        "timestamp":  "2025-02-12T00:00:00Z",
+        "summary":  "Codex initial audit of IKU Sound static marketing site.",
+        "details":  [
+                        "4 static HTML pages share fixed header/footer chrome with css/estilos.css for layout and js/menuapp.js for the hamburger nav.",
+                        "Assets rely on local img/audio media plus Google Fonts and Font Awesome CDN links.",
+                        "Accented Spanish characters render incorrectly because the files were saved with the wrong encoding despite declaring UTF-8.",
+                        "Servicios, Staff, and Contact pages keep a stray \u0027\u003chtml\u0027 token at EOF and contacto uses form_validacion.js which references an undefined \u0027form\u0027 handle, so validation never attaches."
+                    ]
+    },
+    {
+        "timestamp":  "2025-12-02T23:23:54",
+        "summary":  "Idioma preferido",
+        "details":  [
+                        "El usuario pide que todas las respuestas para este proyecto sean en castellano."
+                    ]
+    }
+]
