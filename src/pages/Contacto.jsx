@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaEnvelopeOpenText, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
+import { FaMapMarkerAlt } from 'react-icons/fa';
 
 const initialState = {
   nombre: '',
@@ -12,6 +12,7 @@ const initialState = {
 function Contacto() {
   const [datos, setDatos] = useState(initialState);
   const [errores, setErrores] = useState({});
+  const [enviando, setEnviando] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -21,10 +22,10 @@ function Contacto() {
   const validar = () => {
     const nuevosErrores = {};
     if (!datos.nombre.trim()) {
-      nuevosErrores.nombre = 'Completá tu nombre.';
+      nuevosErrores.nombre = 'Completa tu nombre.';
     }
     if (!datos.email.trim()) {
-      nuevosErrores.email = 'Completá tu email.';
+      nuevosErrores.email = 'Completa tu email.';
     }
     if (!datos.mensaje.trim()) {
       nuevosErrores.mensaje = 'Contanos tu mensaje.';
@@ -32,14 +33,40 @@ function Contacto() {
     return nuevosErrores;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const resultado = validar();
     setErrores(resultado);
 
-    if (Object.keys(resultado).length === 0) {
-      alert('¡Gracias por tu mensaje! Te contactaremos a la brevedad.');
+    if (Object.keys(resultado).length > 0) {
+      return;
+    }
+
+    try {
+      setEnviando(true);
+      const respuesta = await fetch('/api/contacto', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+      });
+
+      if (!respuesta.ok) {
+        const data = await respuesta.json().catch(() => null);
+        const mensaje =
+          data?.errores?.join(' ') || 'No pudimos enviar tu mensaje. Proba nuevamente.';
+        alert(mensaje);
+        return;
+      }
+
+      alert('Gracias por tu mensaje! Te contactaremos a la brevedad.');
       setDatos(initialState);
+    } catch (error) {
+      console.error('Error al enviar el formulario', error);
+      alert('Ocurrio un error inesperado. Intenta mas tarde.');
+    } finally {
+      setEnviando(false);
     }
   };
 
@@ -74,7 +101,7 @@ function Contacto() {
                 {errores.email && <span className="error">{errores.email}</span>}
               </p>
               <p>
-                <label htmlFor="telefono">Teléfono</label>
+                <label htmlFor="telefono">Telefono</label>
                 <input
                   type="tel"
                   id="telefono"
@@ -105,8 +132,8 @@ function Contacto() {
                 {errores.mensaje && <span className="error">{errores.mensaje}</span>}
               </p>
               <p className="block">
-                <button id="btn_enviar" type="submit">
-                  Enviar
+                <button id="btn_enviar" type="submit" disabled={enviando}>
+                  {enviando ? 'Enviando...' : 'Enviar'}
                 </button>
               </p>
             </form>
@@ -127,14 +154,8 @@ function Contacto() {
               <li>
                 <FaMapMarkerAlt /> CABA
               </li>
-              <li>
-                <FaPhone /> (111) 111 111 111
-              </li>
-              <li>
-                <FaEnvelopeOpenText /> pablostrings@gmail.com
-              </li>
             </ul>
-            <p>IKU Sound</p>
+            <p>Completa el formulario y te responderemos por correo.</p>
           </div>
         </div>
       </div>
