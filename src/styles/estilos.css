@@ -213,74 +213,87 @@ header nav {
 /* Staff */
 
 #staff {
-  height: 91vh;
+  min-height: 91vh;
   background-image: url('/img/consola_fondo.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
-  padding-top: 9vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 0.4fr 1.8fr;
-  grid-template-areas:
-    'staff staff'
-    'consola pablofoto';
-  gap: 0;
+  padding: 14vh 5vw 5vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
 }
 
 #staff h1 {
-  grid-area: staff;
-  justify-self: center;
-  margin-top: 30px;
+  align-self: center;
+  margin-top: 0;
   font-family: 'Spartan', sans-serif;
   font-weight: bold;
   opacity: 0.8;
   font-size: 50px;
-  align-self: center;
-  margin-bottom: 20px;
+  margin-bottom: 0.5rem;
 }
 
-#consola {
-  max-width: 510px;
-  max-height: 510px;
+.staff-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.staff-panel {
+  position: relative;
+  width: 560px;
+  max-width: 92vw;
   border-radius: 50px;
-  opacity: 0.85;
-  grid-area: consola;
-  justify-self: right;
-  align-self: center;
-  margin-left: 1vw;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+}
+
+.consola-img {
+  width: 100%;
+  display: block;
+}
+
+.staff-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 2rem 2.2rem 2.5rem;
+  border-radius: 20px;
+  color: #cfcfcf;
+  font-family: 'Spartan', sans-serif;
+  text-align: left;
+}
+
+.staff-text h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.staff-text p {
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: bold;
+}
+
+.staff-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #pablofoto {
-  max-width: 450px;
-  max-height: 450px;
+  max-width: 500px;
+  max-height: 500px;
   border-radius: 450px;
   opacity: 0.9;
-  grid-area: pablofoto;
-  align-self: center;
-}
-
-#staff h3,
-#staff p {
-  grid-area: consola;
-  justify-self: right;
-  align-self: center;
-  z-index: 4;
-  font-family: 'Spartan', sans-serif;
-  font-weight: bold;
-  color: #cfcfcf;
-  user-select: none;
-}
-
-#staff h3 {
-  font-size: 1.5em;
-  transform: translateY(-410%) translateX(-190%);
-}
-
-#staff p {
-  font-size: 1em;
-  transform: translateY(-20%) translateX(-8%);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
 }
 
 /* Contacto */
@@ -452,7 +465,7 @@ footer nav {
   justify-content: center;
   text-decoration: none;
   padding: 0 10px;
-  color: #ececec;
+  color: #fff;
   line-height: 30px;
   font-size: 3vh;
   text-align: center;
@@ -460,6 +473,28 @@ footer nav {
   height: 5vh;
   box-shadow: 0 3px 5px 0px #00000033;
   transition: 0.2s;
+}
+
+#btn_redes li a svg {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+#btn_redes li .facebook svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+#btn_redes li .instagram svg {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
+#btn_redes li .soundcloud svg {
+  width: 2rem;
+  height: 2rem;
+  transform: scale(1.25);
+  transform-origin: center;
 }
 
 #btn_redes:hover a {
@@ -491,22 +526,12 @@ footer nav {
 /* Responsive */
 
 @media screen and (max-width: 1054px) {
+  .consola-img {
+    max-width: 380px;
+  }
+
   #pablofoto {
-    max-width: 350px;
-    max-height: 350px;
-  }
-
-  #consola {
-    max-width: 410px;
-    max-height: 410px;
-  }
-
-  #staff h3 {
-    transform: translateY(-350%) translateX(-130%);
-  }
-
-  #staff p {
-    font-size: 0.8em;
+    max-width: 320px;
   }
 }
 
@@ -561,31 +586,25 @@ footer nav {
   }
 
   #staff {
-    position: relative;
-    display: flex;
-    height: auto;
+    padding: 14vh 1.5rem 3rem;
+  }
+
+  .staff-content {
     flex-direction: column;
-    z-index: 0;
-    padding-top: 10vh;
   }
 
-  #staff h1 {
-    margin-bottom: -30px;
+  .staff-info,
+  .staff-photo {
+    width: 100%;
   }
 
-  #staff h3 {
-    font-size: 1.5em;
-    transform: translateX(10%) translateY(500%);
-  }
-
-  #staff p {
-    font-size: 0.85em;
-    transform: translateX(0.5%) translateY(290%);
+  .staff-text {
+    text-align: center;
   }
 
   #pablofoto {
-    margin-bottom: -50px;
-    transform: translateY(-30%);
+    width: 80%;
+    max-width: 320px;
   }
 
   #contacto {
