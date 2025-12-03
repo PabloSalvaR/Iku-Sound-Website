@@ -159,6 +159,9 @@ header nav {
 #servicios {
   user-select: none;
   min-height: 80vh;
+  height: 100%;
+  padding: 5vh 5vw;
+  box-sizing: border-box;
   overflow: hidden;
   background-image: url('/img/textura_fondo.jpg');
   background-size: cover;
@@ -614,6 +617,7 @@ footer nav {
 
   #servicios {
     min-height: auto;
+    height: auto;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     gap: 20px 0;

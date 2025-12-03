@@ -3,6 +3,7 @@ export default {
   async fetch(request, env) {
     try {
       const url = new URL(request.url);
+      const { pathname } = url;
 
       if (url.pathname === '/api/contacto' && request.method === 'POST') {
         return handleContacto(request, env);
@@ -35,7 +36,7 @@ function shouldFallbackToIndex(pathname) {
   return !pathname.includes('.') && !pathname.startsWith('/cdn-cgi/');
 }
 
-async function handleContacto(request) {
+async function handleContacto(request, env) {
   let datos;
   try {
     datos = await request.json();
