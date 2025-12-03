@@ -5,6 +5,12 @@ var __name = (target, value) => __defProp(target, "name", { value, configurable:
 var worker_default = {
   async fetch(request, env) {
     try {
+      const { pathname } = new URL(request.url);
+      if (pathname === "/__env") {
+        return new Response(JSON.stringify(Object.keys(env || {})), {
+          headers: { "content-type": "application/json" }
+        });
+      }
       if (!env.ASSETS || typeof env.ASSETS.fetch !== "function") {
         throw new Error("ASSETS binding is not available. Deploy with --assets dist.");
       }
@@ -12,18 +18,16 @@ var worker_default = {
       if (assetResponse.status !== 404 || request.method !== "GET") {
         return assetResponse;
       }
-      if (!shouldFallbackToIndex(new URL(request.url).pathname)) {
+      if (!shouldFallbackToIndex(pathname)) {
         return assetResponse;
       }
-      const indexUrl = new URL("/index.html", request.url);
-      const indexRequest = new Request(indexUrl.toString(), {
-        method: "GET",
-        headers: request.headers
-      });
+      const indexRequest = new Request(new URL("/index.html", request.url), request);
       return env.ASSETS.fetch(indexRequest);
     } catch (error) {
+      const message = error instanceof Error ? `${error.name}: ${error.message}` : "Unknown error";
       console.error("Worker unhandled error:", error);
-      return new Response("Internal Error", { status: 500 });
+      return new Response(`Internal Error
+${message}`, { status: 500 });
     }
   }
 };
@@ -73,7 +77,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// .wrangler/tmp/bundle-6Gz4D7/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-kl72nn/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -105,7 +109,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-6Gz4D7/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-kl72nn/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

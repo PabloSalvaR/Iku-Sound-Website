@@ -6,6 +6,11 @@ var worker_default = {
   async fetch(request, env) {
     try {
       const { pathname } = new URL(request.url);
+      if (pathname === "/__env") {
+        return new Response(JSON.stringify(Object.keys(env || {})), {
+          headers: { "content-type": "application/json" }
+        });
+      }
       if (!env.ASSETS || typeof env.ASSETS.fetch !== "function") {
         throw new Error("ASSETS binding is not available. Deploy with --assets dist.");
       }
@@ -49,22 +54,6 @@ var drainBody = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "drainBody");
 var middleware_ensure_req_body_drained_default = drainBody;
 
-// C:/Users/pablo/AppData/Local/npm-cache/_npx/32026684e21afda6/node_modules/wrangler/templates/middleware/middleware-scheduled.ts
-var scheduled = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx) => {
-  const url = new URL(request.url);
-  if (url.pathname === "/__scheduled") {
-    const cron = url.searchParams.get("cron") ?? "";
-    await middlewareCtx.dispatch("scheduled", { cron });
-    return new Response("Ran scheduled event");
-  }
-  const resp = await middlewareCtx.next(request, env);
-  if (request.headers.get("referer")?.endsWith("/__scheduled") && url.pathname === "/favicon.ico" && resp.status === 500) {
-    return new Response(null, { status: 404 });
-  }
-  return resp;
-}, "scheduled");
-var middleware_scheduled_default = scheduled;
-
 // C:/Users/pablo/AppData/Local/npm-cache/_npx/32026684e21afda6/node_modules/wrangler/templates/middleware/middleware-miniflare3-json-error.ts
 function reduceError(e) {
   return {
@@ -88,10 +77,9 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// .wrangler/tmp/bundle-8059CS/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-C4VjXq/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
-  middleware_scheduled_default,
   middleware_miniflare3_json_error_default
 ];
 var middleware_insertion_facade_default = worker_default;
@@ -121,7 +109,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-8059CS/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-C4VjXq/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

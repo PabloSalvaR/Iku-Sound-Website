@@ -2,6 +2,7 @@
 export default {
   async fetch(request, env) {
     try {
+      const { pathname } = new URL(request.url);
       if (!env.ASSETS || typeof env.ASSETS.fetch !== 'function') {
         throw new Error('ASSETS binding is not available. Deploy with --assets dist.');
       }
@@ -11,20 +12,16 @@ export default {
         return assetResponse;
       }
 
-      if (!shouldFallbackToIndex(new URL(request.url).pathname)) {
+      if (!shouldFallbackToIndex(pathname)) {
         return assetResponse;
       }
 
-      const indexUrl = new URL('/index.html', request.url);
-      const indexRequest = new Request(indexUrl.toString(), {
-        method: 'GET',
-        headers: request.headers
-      });
-
+      const indexRequest = new Request(new URL('/index.html', request.url), request);
       return env.ASSETS.fetch(indexRequest);
     } catch (error) {
+      const message = error instanceof Error ? `${error.name}: ${error.message}` : 'Unknown error';
       console.error('Worker unhandled error:', error);
-      return new Response('Internal Error', { status: 500 });
+      return new Response(`Internal Error\n${message}`, { status: 500 });
     }
   }
 };
