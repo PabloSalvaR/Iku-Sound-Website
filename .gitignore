@@ -9,8 +9,8 @@ Thumbs.db
 # Logs
 *.log
 
-# Wrangler / Cloudflare
-.wrangler/
+# Codex
+.codex/
 
 # Node / Herramientas JS (por si usás npm más adelante)
 node_modules/
