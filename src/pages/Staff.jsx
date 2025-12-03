@@ -2,7 +2,7 @@ function Staff() {
   return (
     <section id="staff">
       <h1>Staff</h1>
-      <h3>Pablo Román</h3>
+      <h3>Pablo Roman</h3>
       <p>
         - Encargado de todos los procesos en IKU
         <br />- Técnico en Sonido y Post-Producción de Audio
@@ -10,7 +10,7 @@ function Staff() {
         <br />- Músico guitarrista / sesionista
       </p>
       <img src="/img/consola.jpg" alt="Consola analógica" id="consola" />
-      <img src="/img/pablo.jpg" alt="Pablo Román" id="pablofoto" />
+      <img src="/img/pablo.jpg" alt="Pablo Roman" id="pablofoto" />
     </section>
   );
 }
