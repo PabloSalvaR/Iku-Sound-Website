@@ -1,0 +1,19 @@
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Wrangler / Cloudflare
+.wrangler/
+
+# Node / Herramientas
+node_modules/
+dist/
+build/
+.codex/
