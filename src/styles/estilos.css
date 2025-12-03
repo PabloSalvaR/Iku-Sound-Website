@@ -434,14 +434,30 @@ footer nav {
   min-height: 50px;
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 2rem;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 #img_pie {
   height: 7vh;
   display: flex;
   align-self: center;
+}
+
+.footer-version {
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #cfcfcf;
+  opacity: 0.7;
 }
 
 #btn_redes {

@@ -1,4 +1,5 @@
 import { FaFacebookF, FaInstagram, FaYoutube, FaSoundcloud } from 'react-icons/fa';
+import packageJson from '../../package.json';
 
 const redes = [
   { label: 'facebook', href: '#', icon: <FaFacebookF /> },
@@ -8,10 +9,15 @@ const redes = [
 ];
 
 function Footer() {
+  const version = packageJson.version;
+
   return (
     <footer>
       <nav>
-        <img src="/img/iku_logo_white.png" alt="Logo IKU Sound" id="img_pie" />
+        <div className="footer-brand">
+          <img src="/img/iku_logo_white.png" alt="Logo IKU Sound" id="img_pie" />
+          <small className="footer-version">v{version}</small>
+        </div>
         <ul id="btn_redes">
           {redes.map(({ label, href, icon }) => (
             <li key={label}>
