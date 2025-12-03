@@ -2,9 +2,9 @@ import { FaFacebookF, FaInstagram, FaYoutube, FaSoundcloud } from 'react-icons/f
 import packageJson from '../../package.json';
 
 const redes = [
-  { label: 'facebook', href: '#', icon: <FaFacebookF /> },
-  { label: 'instagram', href: 'https://www.instagram.com/pablostrings/', icon: <FaInstagram /> },
-  { label: 'youtube', href: 'https://www.youtube.com/channel/UCxxHxvf1bgT7uobENf121hg/videos', icon: <FaYoutube /> },
+  { label: 'facebook', href: null, icon: <FaFacebookF /> },
+  { label: 'instagram', href: null, icon: <FaInstagram /> },
+  { label: 'youtube', href: null, icon: <FaYoutube /> },
   { label: 'soundcloud', href: 'https://soundcloud.com/ikusoundstudio', icon: <FaSoundcloud /> }
 ];
 
@@ -19,13 +19,19 @@ function Footer() {
           <small className="footer-version">v{version}</small>
         </div>
         <ul id="btn_redes">
-          {redes.map(({ label, href, icon }) => (
-            <li key={label}>
-              <a href={href} target="_blank" rel="noreferrer" className={label}>
-                {icon}
-              </a>
-            </li>
-          ))}
+          {redes.map(({ label, href, icon }) => {
+            const anchorProps = href
+              ? { href, target: '_blank', rel: 'noreferrer' }
+              : { role: 'button', 'aria-disabled': 'true' };
+
+            return (
+              <li key={label}>
+                <a className={label} {...anchorProps}>
+                  {icon}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </footer>
