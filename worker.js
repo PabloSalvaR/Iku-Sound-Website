@@ -1,25 +1,34 @@
-// Cloudflare Workers entry point to serve SPA assets with a fallback.
+// Cloudflare Worker that serves the Vite build and falls back to index.html for SPA routes.
 export default {
-  async fetch(request, env, ctx) {
-    const url = new URL(request.url);
+  async fetch(request, env) {
+    try {
+      if (!env.ASSETS || typeof env.ASSETS.fetch !== 'function') {
+        throw new Error('ASSETS binding is not available. Deploy with --assets dist.');
+      }
 
-    // Try to serve the requested asset first.
-    const assetResponse = await env.ASSETS.fetch(request);
-    if (assetResponse.status !== 404 || request.method !== 'GET') {
-      return assetResponse;
-    }
+      const assetResponse = await env.ASSETS.fetch(request);
+      if (assetResponse.status !== 404 || request.method !== 'GET') {
+        return assetResponse;
+      }
 
-    // If the path looks like an SPA route (no file extension), fall back to index.html.
-    if (shouldFallbackToIndex(url.pathname)) {
-      const indexRequest = new Request(new URL('/index.html', url), request);
+      if (!shouldFallbackToIndex(new URL(request.url).pathname)) {
+        return assetResponse;
+      }
+
+      const indexUrl = new URL('/index.html', request.url);
+      const indexRequest = new Request(indexUrl.toString(), {
+        method: 'GET',
+        headers: request.headers
+      });
+
       return env.ASSETS.fetch(indexRequest);
+    } catch (error) {
+      console.error('Worker unhandled error:', error);
+      return new Response('Internal Error', { status: 500 });
     }
-
-    return assetResponse;
   }
 };
 
 function shouldFallbackToIndex(pathname) {
-  // Ignore requests for actual files or Cloudflare internals like /cdn-cgi/.
   return !pathname.includes('.') && !pathname.startsWith('/cdn-cgi/');
 }
