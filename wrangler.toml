@@ -1,0 +1,5 @@
+name = "iku-sound-web"
+compatibility_date = "2025-12-02"
+
+# Todos los archivos estáticos están en la raíz del repo
+assets = { directory = "." }
