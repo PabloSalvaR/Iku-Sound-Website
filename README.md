@@ -26,7 +26,7 @@ Sitio web estático para IKU Sound, un homestudio orientado a servicios de graba
    ```bash
    npm run build
    ```
-   El resultado queda en `dist/`. Puedes previsualizarlo con `npm run preview`.
+   El resultado queda en `dist/`. 
 
 ## Estructura relevante
 ```
@@ -38,7 +38,3 @@ Sitio web estático para IKU Sound, un homestudio orientado a servicios de graba
 │  └─ App.jsx       # Definición de rutas y layout
 └─ vite.config.js   # Configuración mínima de Vite + React
 ```
-
-## Notas
-- Los enlaces externos (SoundCloud, Instagram, YouTube) siguen apuntando a los perfiles originales.
-- Si necesitas volver a servir los assets desde un CDN, basta con reemplazar las rutas en `public/` o referenciarlas vía URL absoluta en los componentes.
