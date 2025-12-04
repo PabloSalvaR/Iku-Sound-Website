@@ -111,7 +111,6 @@ function Contacto() {
   const enviarFormulario = async () => {
     try {
       setEnviando(true);
-      setConfirmacionAbierta(false);
       const respuesta = await fetch('/api/contacto', {
         method: 'POST',
         headers: {
@@ -135,6 +134,7 @@ function Contacto() {
       toast.error('Ocurrió un error inesperado. Intentá más tarde.');
     } finally {
       setEnviando(false);
+      setConfirmacionAbierta(false);
     }
   };
 
