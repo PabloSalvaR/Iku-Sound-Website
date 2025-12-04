@@ -69,6 +69,14 @@ function validarDatos(datos) {
   }
   if (!datos.email || !datos.email.trim()) {
     mensajes.push('Completá tu email.');
+  } else if (!esEmailValido(datos.email.trim())) {
+    mensajes.push('Ingresá un email válido.');
+  }
+  if (datos.telefono) {
+    const telefono = datos.telefono.replace(/\s+/g, '');
+    if (!/^\+?[0-9]{7,15}$/.test(telefono)) {
+      mensajes.push('Teléfono inválido.');
+    }
   }
   if (!datos.mensaje || !datos.mensaje.trim()) {
     mensajes.push('Contanos tu mensaje.');
@@ -76,6 +84,9 @@ function validarDatos(datos) {
   return mensajes;
 }
 
+function esEmailValido(valor) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor);
+}
 async function enviarCorreo(datos, env) {
   const key = env.RESEND_KEY;
   if (!key) {

@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import Layout from './components/Layout.jsx';
 import Home from './pages/Home.jsx';
 import Servicios from './pages/Servicios.jsx';
@@ -8,6 +9,7 @@ import Contacto from './pages/Contacto.jsx';
 function App() {
   return (
     <BrowserRouter>
+      <Toaster richColors position="bottom-center" />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />

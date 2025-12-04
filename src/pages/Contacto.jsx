@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
+import { toast } from 'sonner';
+import { validate as isEmail } from 'email-validator';
 
 const initialState = {
   nombre: '',
@@ -13,6 +15,25 @@ function Contacto() {
   const [datos, setDatos] = useState(initialState);
   const [errores, setErrores] = useState({});
   const [enviando, setEnviando] = useState(false);
+  const [confirmacionAbierta, setConfirmacionAbierta] = useState(false);
+  const [datosPendientes, setDatosPendientes] = useState(initialState);
+
+  useEffect(() => {
+    if (confirmacionAbierta) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [confirmacionAbierta]);
+
+  const renderError = (campo) => (
+    <span className="error" aria-live="polite">
+      {errores[campo] || '\u00a0'}
+    </span>
+  );
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -26,6 +47,18 @@ function Contacto() {
     }
     if (!datos.email.trim()) {
       nuevosErrores.email = 'Completa tu email.';
+    } else if (!isEmail(datos.email.trim())) {
+      nuevosErrores.email = 'Ingresá un email válido.';
+    }
+
+    if (datos.telefono.trim()) {
+      const telefono = datos.telefono.replace(/\s+/g, '');
+      if (!/^\+?[0-9]{7,15}$/.test(telefono)) {
+        nuevosErrores.telefono = 'Ingresá solo números (y opcional +).';
+      }
+    }
+    if (!datos.motivo.trim()) {
+      nuevosErrores.motivo = 'Contanos el motivo.';
     }
     if (!datos.mensaje.trim()) {
       nuevosErrores.mensaje = 'Contanos tu mensaje.';
@@ -33,7 +66,7 @@ function Contacto() {
     return nuevosErrores;
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const resultado = validar();
     setErrores(resultado);
@@ -42,8 +75,16 @@ function Contacto() {
       return;
     }
 
+    setDatosPendientes(datos);
+    setConfirmacionAbierta(true);
+  };
+
+  const cerrarConfirmacion = () => setConfirmacionAbierta(false);
+
+  const enviarFormulario = async () => {
     try {
       setEnviando(true);
+      setConfirmacionAbierta(false);
       const respuesta = await fetch('/api/contacto', {
         method: 'POST',
         headers: {
@@ -55,16 +96,16 @@ function Contacto() {
       if (!respuesta.ok) {
         const data = await respuesta.json().catch(() => null);
         const mensaje =
-          data?.errores?.join(' ') || 'No pudimos enviar tu mensaje. Proba nuevamente.';
-        alert(mensaje);
+          data?.errores?.join(' ') || 'No pudimos enviar tu mensaje. Probá nuevamente.';
+        toast.error(mensaje);
         return;
       }
 
-      alert('Gracias por tu mensaje! Te contactaremos a la brevedad.');
+      toast.success('¡Gracias por tu mensaje! Te contactaremos a la brevedad.');
       setDatos(initialState);
     } catch (error) {
       console.error('Error al enviar el formulario', error);
-      alert('Ocurrio un error inesperado. Intenta mas tarde.');
+      toast.error('Ocurrió un error inesperado. Intentá más tarde.');
     } finally {
       setEnviando(false);
     }
@@ -87,7 +128,7 @@ function Contacto() {
                   value={datos.nombre}
                   onChange={handleChange}
                 />
-                {errores.nombre && <span className="error">{errores.nombre}</span>}
+                {renderError('nombre')}
               </p>
               <p>
                 <label htmlFor="email">Email*</label>
@@ -98,10 +139,10 @@ function Contacto() {
                   value={datos.email}
                   onChange={handleChange}
                 />
-                {errores.email && <span className="error">{errores.email}</span>}
+                {renderError('email')}
               </p>
               <p>
-                <label htmlFor="telefono">Telefono</label>
+                <label htmlFor="telefono">Teléfono</label>
                 <input
                   type="tel"
                   id="telefono"
@@ -111,7 +152,7 @@ function Contacto() {
                 />
               </p>
               <p>
-                <label htmlFor="motivo">Motivo</label>
+                <label htmlFor="motivo">Motivo*</label>
                 <input
                   type="text"
                   id="motivo"
@@ -119,6 +160,7 @@ function Contacto() {
                   value={datos.motivo}
                   onChange={handleChange}
                 />
+                {renderError('motivo')}
               </p>
               <p className="block">
                 <label htmlFor="mensaje">Mensaje*</label>
@@ -129,7 +171,7 @@ function Contacto() {
                   value={datos.mensaje}
                   onChange={handleChange}
                 />
-                {errores.mensaje && <span className="error">{errores.mensaje}</span>}
+                {renderError('mensaje')}
               </p>
               <p className="block">
                 <button id="btn_enviar" type="submit" disabled={enviando}>
@@ -159,6 +201,25 @@ function Contacto() {
           </div>
         </div>
       </div>
+      {confirmacionAbierta && (
+        <div className="modal-overlay" role="dialog" aria-modal="true">
+          <div className="modal-content">
+            <h3>¿Enviar mensaje?</h3>
+            <p>
+              Revisá que tus datos sean correctos antes de enviar. Nombre: <strong>{datosPendientes.nombre}</strong> –
+              Email: <strong>{datosPendientes.email}</strong>
+            </p>
+            <div className="modal-actions">
+              <button type="button" className="btn-secondary" onClick={cerrarConfirmacion} disabled={enviando}>
+                Cancelar
+              </button>
+              <button type="button" className="btn-primary" onClick={enviarFormulario} disabled={enviando}>
+                {enviando ? 'Enviando…' : 'Confirmar'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
