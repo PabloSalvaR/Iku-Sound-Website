@@ -1,40 +1,50 @@
 # IKU Sound Website
 
-Sitio web estático para IKU Sound, un homestudio orientado a servicios de grabación, mezcla y masterización. La nueva versión usa React con Vite para reutilizar el encabezado/pie en todas las páginas, mejorar la navegación móvil y centralizar los estilos.
+Sitio web estatico para IKU Sound, un homestudio enfocado en grabacion, mezcla y masterizacion. El proyecto es una SPA en React + Vite y se sirve a traves de un Cloudflare Worker que tambien publica un endpoint para el formulario de contacto.
 
-## Características
-- Navegación SPA con React Router manteniendo las rutas clásicas (`/`, `/servicios`, `/staff`, `/contacto`).
-- Componentes reutilizables (`Header`, `Footer`, layout global) y assets servidos desde `public/` para preservar la estética original.
-- Formulario de contacto controlado con validaciones básicas (campos obligatorios y mensajes de error inmediatos).
-- Build optimizada con Vite (HMR en desarrollo, bundling y minificación listos para producción).
+## Arquitectura
+- **Frontend:** React 18 con React Router 6. Las paginas (`/`, `/servicios`, `/staff`, `/contacto`) comparten un layout con `Header` y `Footer`, mas los estilos originales portados a `src/styles/estilos.css`.
+- **Backend / Edge:** `worker.js` corre en Cloudflare Workers, sirve los assets generados (`env.ASSETS`) y hace fallback a `index.html` para las rutas del SPA. Tambien maneja `POST /api/contacto`.
+- **Formulario de contacto:** componente controlado (`src/pages/Contacto.jsx`) con validaciones en front y back. Los limites sincronizados son: nombre 40, email 60, telefono 16, motivo 50 y mensaje 500. El worker sanitiza y reenvia los datos via Resend (`RESEND_KEY`).
+- **Notificaciones y UI extra:** `sonner` para toasts, `react-icons` para iconos y un modal de confirmacion antes de enviar.
 
 ## Requisitos
-- Node.js 18 o superior (recomendado 18 LTS).
-- npm (incluido junto con Node).
+- Node.js 18+ (se recomienda 18 LTS).
+- npm (incluido con Node).
+- Cuenta de Cloudflare + credencial de Resend para la API de contacto.
 
-## Cómo usar
-1. Instalar dependencias:
-   ```bash
-   npm install
-   ```
-2. Levantar el entorno de desarrollo (incluye HMR y enrutamiento):
-   ```bash
-   npm run dev
-   ```
-   Abre el enlace que Vite imprime (por defecto http://localhost:5173/).
-3. Generar el build estático listo para subir a cualquier hosting:
-   ```bash
-   npm run build
-   ```
-   El resultado queda en `dist/`. 
+## Scripts utiles
+```bash
+npm install          # instala dependencias
+npm run dev          # servidor de desarrollo con HMR (http://localhost:5173)
+npm run build        # compila la app a dist/
+npm run preview      # sirve el build localmente
+```
+
+## Variables y despliegue
+- `RESEND_KEY`: API key de Resend. Guardarla como secreto en Cloudflare (`wrangler secret put RESEND_KEY`).
+- `ASSETS`: binding configurado por Wrangler al usar `--assets dist`.
+- Despliegue sugerido:
+  1. `npm run build`
+  2. `wrangler deploy --assets dist`
+
+Para pruebas locales del worker se puede usar `wrangler dev` apuntando al build generado.
 
 ## Estructura relevante
 ```
-├─ public/          # Imágenes y assets estáticos (se sirven sin pasar por el bundler)
-├─ src/
-│  ├─ components/   # Header, Footer y layout compartido
-│  ├─ pages/        # Inicio, Servicios, Staff, Contacto
-│  ├─ styles/       # estilos.css (estilo global portado del sitio original)
-│  └─ App.jsx       # Definición de rutas y layout
-└─ vite.config.js   # Configuración mínima de Vite + React
+public/                # imagenes y assets estaticos
+src/
+  components/          # Header, Footer, Layout
+  pages/               # Home, Servicios, Staff, Contacto
+  styles/              # estilos.css
+  App.jsx              # rutas y layout principal
+worker.js              # Cloudflare Worker + API contacto
+vite.config.js         # configuracion de Vite
+wrangler.toml          # configuracion del worker
 ```
+
+## Flujo de contacto
+1. El usuario completa el formulario y lo confirma desde el modal.
+2. El frontend valida limites y formatos, muestra errores inline o un spinner durante el POST.
+3. El worker valida nuevamente, arma el HTML del mensaje y lo envia via Resend.
+4. El usuario recibe feedback mediante toasts (exito o error) y se resetea el formulario cuando corresponde.
