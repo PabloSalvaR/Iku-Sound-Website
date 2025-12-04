@@ -36,6 +36,14 @@ function shouldFallbackToIndex(pathname) {
   return !pathname.includes('.') && !pathname.startsWith('/cdn-cgi/');
 }
 
+const LIMITES = {
+  nombre: 40,
+  email: 60,
+  telefono: 16,
+  motivo: 50,
+  mensaje: 500
+};
+
 async function handleContacto(request, env) {
   let datos;
   try {
@@ -64,22 +72,40 @@ function validarDatos(datos) {
     return mensajes;
   }
 
-  if (!datos.nombre || !datos.nombre.trim()) {
+  const nombre = datos.nombre?.trim() ?? '';
+  if (!nombre) {
     mensajes.push('Completá tu nombre.');
+  } else if (nombre.length > LIMITES.nombre) {
+    mensajes.push('Nombre demasiado largo.');
   }
-  if (!datos.email || !datos.email.trim()) {
+  const email = datos.email?.trim() ?? '';
+  if (!email) {
     mensajes.push('Completá tu email.');
-  } else if (!esEmailValido(datos.email.trim())) {
+  } else if (email.length > LIMITES.email) {
+    mensajes.push('Email demasiado largo.');
+  } else if (!esEmailValido(email)) {
     mensajes.push('Ingresá un email válido.');
   }
   if (datos.telefono) {
     const telefono = datos.telefono.replace(/\s+/g, '');
-    if (!/^\+?[0-9]{7,15}$/.test(telefono)) {
+    const digitos = telefono.startsWith('+') ? telefono.slice(1) : telefono;
+    if (digitos.length > LIMITES.telefono) {
+      mensajes.push('Teléfono demasiado largo.');
+    } else if (!/^\+?[0-9]{7,16}$/.test(telefono)) {
       mensajes.push('Teléfono inválido.');
     }
   }
-  if (!datos.mensaje || !datos.mensaje.trim()) {
+  const motivo = datos.motivo?.trim() ?? '';
+  if (!motivo) {
+    mensajes.push('Contanos el motivo.');
+  } else if (motivo.length > LIMITES.motivo) {
+    mensajes.push('Motivo demasiado largo.');
+  }
+  const mensaje = datos.mensaje?.trim() ?? '';
+  if (!mensaje) {
     mensajes.push('Contanos tu mensaje.');
+  } else if (mensaje.length > LIMITES.mensaje) {
+    mensajes.push('Mensaje demasiado largo.');
   }
   return mensajes;
 }

@@ -383,6 +383,7 @@ header nav {
 
 .contact-form form textarea {
   resize: vertical;
+  min-height: 120px;
 }
 
 .contact-form form button {
@@ -478,11 +479,45 @@ iframe {
   line-height: 1.4;
 }
 
+.modal-summary {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.modal-summary li strong {
+  font-weight: 700;
+  margin-right: 0.3rem;
+}
+
 .modal-actions {
   display: flex;
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+.modal-loader {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #bdbdbd;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #7fd37f;
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
 }
 
 .modal-actions .btn-primary,
@@ -791,6 +826,12 @@ footer nav {
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
   }
 }
 
