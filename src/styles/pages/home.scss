@@ -25,12 +25,16 @@
     opacity: 0.8;
     margin-top: 2vh;
     margin-bottom: 30px;
+    user-select: none;
+    cursor: default;
   }
 
   &__title {
     color: #fff;
     opacity: 0.8;
     letter-spacing: 5px;
+    user-select: none;
+    cursor: default;
   }
 
   &__subtitle {

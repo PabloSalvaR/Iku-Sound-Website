@@ -19,6 +19,8 @@
     opacity: 0.8;
     font-size: 50px;
     margin-bottom: 20px;
+    user-select: none;
+    cursor: default;
   }
 
   &__container {
@@ -42,6 +44,8 @@
   &__form {
     h3 {
       padding-bottom: 1em;
+      user-select: none;
+      cursor: default;
     }
 
     form {
@@ -51,6 +55,11 @@
       p {
         margin: 0;
         padding: 0.6em 0.75em;
+      }
+
+      label {
+        user-select: none;
+        cursor: default;
       }
 
       .contact__field--full {
@@ -98,11 +107,22 @@
   }
 
   &__error {
-    display: block;
-    margin-top: 0.5em;
+    display: inline-block;
+    margin-top: 0.35em;
     color: #c50000;
     font-size: 0.8rem;
+    line-height: 1;
     min-height: 1rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 6px;
+    background: transparent;
+    box-shadow: none;
+    box-sizing: border-box;
+  }
+
+  &__error--visible {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
   }
 
   &__info {
@@ -110,6 +130,8 @@
     color: #bdbdbd;
     min-height: 100%;
     text-align: center;
+    user-select: none;
+    cursor: default;
 
     h4,
     ul,

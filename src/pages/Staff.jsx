@@ -9,9 +9,9 @@ function Staff() {
             <h3 className="staff__name">Pablo Roman</h3>
             <p className="staff__bio">
               - Encargado de todos los procesos en IKU
-              <br />- Tecnico en Sonido y Post-Produccion de Audio
-              <br />- Experiencia en varios estudios de grabacion de Bs. As.
-              <br />- Musico guitarrista / sesionista
+              <br />- Técnico en Sonido y Post-Producción de Audio
+              <br />- Experiencia en varios estudios de grabación de Bs. As.
+              <br />- Músico guitarrista / sesionista
             </p>
           </div>
         </div>

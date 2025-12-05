@@ -15,7 +15,13 @@ function Footer() {
     <footer className="site-footer">
       <nav className="site-footer__nav">
         <div className="site-footer__brand">
-          <img src="/img/iku_logo_white.png" alt="Logo IKU Sound" className="site-footer__logo" />
+          <img
+            src="/img/iku_logo_white.png"
+            alt="Logo IKU Sound"
+            className="site-footer__logo"
+            draggable="false"
+            onDragStart={(event) => event.preventDefault()}
+          />
           <small className="site-footer__version">v{version}</small>
         </div>
         <ul className="site-footer__social">

@@ -1,7 +1,7 @@
 const servicios = [
   {
     id: 'grabacion',
-    titulo: 'Grabacion',
+    titulo: 'Grabación',
     descripcion: (
       <ul>
         <li>Voces</li>
@@ -24,7 +24,7 @@ const servicios = [
   },
   {
     id: 'masterizacion',
-    titulo: 'Masterizacion',
+    titulo: 'Masterización',
     descripcion: <p>Mejoramos el audio final de tus mezclas.</p>,
     imagen: '/img/speakers.png',
     alt: 'Monitores'

@@ -37,11 +37,15 @@ function Contacto() {
     };
   }, [confirmacionAbierta]);
 
-  const renderError = (campo) => (
-    <span className="contact__error" aria-live="polite">
-      {errores[campo] || '\u00a0'}
-    </span>
-  );
+  const renderError = (campo) => {
+    const mensaje = errores[campo];
+    const className = mensaje ? 'contact__error contact__error--visible' : 'contact__error';
+    return (
+      <span className={className} aria-live="polite">
+        {mensaje || '\u00a0'}
+      </span>
+    );
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -62,33 +66,33 @@ function Contacto() {
     if (!datos.nombre.trim()) {
       nuevosErrores.nombre = 'Completa tu nombre.';
     } else if (datos.nombre.trim().length > LIMITES.nombre) {
-      nuevosErrores.nombre = `MÇ­ximo ${LIMITES.nombre} caracteres.`;
+      nuevosErrores.nombre = `Máximo ${LIMITES.nombre} caracteres.`;
     }
     if (!datos.email.trim()) {
       nuevosErrores.email = 'Completa tu email.';
     } else if (datos.email.trim().length > LIMITES.email) {
-      nuevosErrores.email = `MÇ­ximo ${LIMITES.email} caracteres.`;
+      nuevosErrores.email = `Máximo ${LIMITES.email} caracteres.`;
     } else if (!isEmail(datos.email.trim())) {
-      nuevosErrores.email = 'IngresÇ­ un email vÇ­lido.';
+      nuevosErrores.email = 'Ingresá un email válido.';
     }
 
     if (datos.telefono.trim()) {
       const telefono = datos.telefono.replace(/\s+/g, '');
       if (!/^\+?[0-9]{7,16}$/.test(telefono)) {
-        nuevosErrores.telefono = 'IngresÇ­ solo nÇ§meros (y opcional +).';
+        nuevosErrores.telefono = 'Ingrese solo números (y opcional +).';
       } else if (telefono.length > 16) {
-        nuevosErrores.telefono = 'MÇ­ximo 16 dÇðgitos.';
+        nuevosErrores.telefono = 'Máximo 16 dígitos.';
       }
     }
     if (!datos.motivo.trim()) {
       nuevosErrores.motivo = 'Contanos el motivo.';
     } else if (datos.motivo.trim().length > LIMITES.motivo) {
-      nuevosErrores.motivo = `MÇ­ximo ${LIMITES.motivo} caracteres.`;
+      nuevosErrores.motivo = `Máximo ${LIMITES.motivo} caracteres.`;
     }
     if (!datos.mensaje.trim()) {
       nuevosErrores.mensaje = 'Contanos tu mensaje.';
     } else if (datos.mensaje.trim().length > LIMITES.mensaje) {
-      nuevosErrores.mensaje = `MÇ­ximo ${LIMITES.mensaje} caracteres.`;
+      nuevosErrores.mensaje = `Máximo ${LIMITES.mensaje} caracteres.`;
     }
     return nuevosErrores;
   };
@@ -122,16 +126,16 @@ function Contacto() {
       if (!respuesta.ok) {
         const data = await respuesta.json().catch(() => null);
         const mensaje =
-          data?.errores?.join(' ') || 'No pudimos enviar tu mensaje. ProbÇ­ nuevamente.';
+          data?.errores?.join(' ') || 'No pudimos enviar tu mensaje. Probá nuevamente.';
         toast.error(mensaje);
         return;
       }
 
-      toast.success('¶­Gracias por tu mensaje! Te contactaremos a la brevedad.');
+      toast.success('¡Gracias por tu mensaje! Te contactaremos a la brevedad.');
       setDatos(initialState);
     } catch (error) {
       console.error('Error al enviar el formulario', error);
-      toast.error('OcurriÇü un error inesperado. IntentÇ­ mÇ­s tarde.');
+      toast.error('Ocurrió un error inesperado. Intente más tarde.');
     } finally {
       setEnviando(false);
       setConfirmacionAbierta(false);
@@ -171,7 +175,7 @@ function Contacto() {
                 {renderError('email')}
               </p>
               <p className="contact__field">
-                <label htmlFor="telefono">TelÇ¸fono</label>
+                <label htmlFor="telefono">Teléfono</label>
                 <input
                   type="tel"
                   id="telefono"
@@ -238,8 +242,8 @@ function Contacto() {
       {confirmacionAbierta && (
         <div className="contact__modal-overlay" role="dialog" aria-modal="true">
           <div className="contact__modal">
-            <h3>¶¨Enviar mensaje?</h3>
-            <p>RevisÇ­ que los datos sean correctos antes de enviar:</p>
+            <h3>Confirmación</h3>
+            <p>Revisá que los datos sean correctos antes de enviar:</p>
             <ul className="contact__summary">
               <li>
                 <strong>Nombre:</strong> {datosPendientes.nombre || 'Sin especificar'}
@@ -261,7 +265,7 @@ function Contacto() {
                 Cancelar
               </button>
               <button type="button" className="btn btn--primary" onClick={enviarFormulario} disabled={enviando}>
-                {enviando ? 'Enviandoƒ?Ý' : 'Confirmar'}
+                {enviando ? 'Enviando..' : 'Confirmar'}
               </button>
             </div>
           </div>

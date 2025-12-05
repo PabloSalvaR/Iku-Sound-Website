@@ -20,6 +20,8 @@
     opacity: 0.8;
     font-size: 50px;
     margin-bottom: 20px;
+    user-select: none;
+    cursor: default;
   }
 
   &__grid {

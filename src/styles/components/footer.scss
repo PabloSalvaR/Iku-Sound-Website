@@ -24,6 +24,8 @@
   height: 7vh;
   display: flex;
   align-self: center;
+  user-select: none;
+  cursor: default;
 }
 
 .site-footer__version {
@@ -88,11 +90,12 @@
   transform-origin: center;
 }
 
-.site-footer__social:hover .site-footer__social-link {
+.site-footer__social:hover .site-footer__social-link:not(:hover):not(:focus-visible) {
   filter: blur(2px);
 }
 
-.site-footer__social-link:hover {
+.site-footer__social-link:hover,
+.site-footer__social-link:focus-visible {
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 5px 5px 0px #00000066;
   filter: none;
