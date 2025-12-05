@@ -1,22 +1,22 @@
 function Staff() {
   return (
-    <section id="staff">
-      <h1>Staff</h1>
-      <div className="staff-content">
-        <div className="staff-panel">
-          <img src="/img/consola.jpg" alt="Consola analógica" className="consola-img" />
-          <div className="staff-text">
-            <h3>Pablo Roman</h3>
-            <p>
+    <section id="staff" className="staff">
+      <h1 className="staff__title">Staff</h1>
+      <div className="staff__content">
+        <div className="staff__panel">
+          <img src="/img/consola.jpg" alt="Consola analogica" className="staff__image" />
+          <div className="staff__overlay">
+            <h3 className="staff__name">Pablo Roman</h3>
+            <p className="staff__bio">
               - Encargado de todos los procesos en IKU
-              <br />- Técnico en Sonido y Post-Producción de Audio
-              <br />- Experiencia en varios estudios de grabación de Bs. As.
-              <br />- Músico guitarrista / sesionista
+              <br />- Tecnico en Sonido y Post-Produccion de Audio
+              <br />- Experiencia en varios estudios de grabacion de Bs. As.
+              <br />- Musico guitarrista / sesionista
             </p>
           </div>
         </div>
-        <div className="staff-photo">
-          <img src="/img/pablo.jpg" alt="Pablo Roman" id="pablofoto" />
+        <div className="staff__photo">
+          <img src="/img/pablo.jpg" alt="Pablo Roman" className="staff__portrait" />
         </div>
       </div>
     </section>

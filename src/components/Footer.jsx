@@ -12,21 +12,21 @@ function Footer() {
   const version = packageJson.version;
 
   return (
-    <footer>
-      <nav>
-        <div className="footer-brand">
-          <img src="/img/iku_logo_white.png" alt="Logo IKU Sound" id="img_pie" />
-          <small className="footer-version">v{version}</small>
+    <footer className="site-footer">
+      <nav className="site-footer__nav">
+        <div className="site-footer__brand">
+          <img src="/img/iku_logo_white.png" alt="Logo IKU Sound" className="site-footer__logo" />
+          <small className="site-footer__version">v{version}</small>
         </div>
-        <ul id="btn_redes">
+        <ul className="site-footer__social">
           {redes.map(({ label, href, icon }) => {
             const anchorProps = href
               ? { href, target: '_blank', rel: 'noreferrer' }
               : { role: 'button', 'aria-disabled': 'true' };
 
             return (
-              <li key={label}>
-                <a className={label} {...anchorProps}>
+              <li className="site-footer__social-item" key={label}>
+                <a className={`site-footer__social-link ${label}`} {...anchorProps}>
                   {icon}
                 </a>
               </li>

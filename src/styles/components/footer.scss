@@ -1,0 +1,115 @@
+.site-footer {
+  width: 100%;
+}
+
+.site-footer__nav {
+  background-color: #132b13;
+  min-height: var(--footer-height);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 2rem;
+}
+
+.site-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.site-footer__logo {
+  height: 7vh;
+  display: flex;
+  align-self: center;
+}
+
+.site-footer__version {
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #cfcfcf;
+  opacity: 0.7;
+}
+
+.site-footer__social {
+  width: 350px;
+  height: auto;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.site-footer__social-item {
+  display: inline-block;
+  margin-left: 10px;
+  text-align: center;
+}
+
+.site-footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 0 10px;
+  color: #fff;
+  font-size: clamp(1.2rem, 1.5vw, 1.8rem);
+  text-align: center;
+  width: clamp(42px, 6vw, 60px);
+  height: clamp(42px, 6vw, 60px);
+  box-shadow: 0 3px 5px 0px #00000033;
+  transition: 0.2s;
+}
+
+.site-footer__social-link svg {
+  width: clamp(1.3rem, 2vw, 1.8rem);
+  height: clamp(1.3rem, 2vw, 1.8rem);
+}
+
+.site-footer__social-link.facebook svg {
+  width: clamp(1.1rem, 1.8vw, 1.6rem);
+  height: clamp(1.1rem, 1.8vw, 1.6rem);
+}
+
+.site-footer__social-link.instagram svg {
+  width: clamp(1.2rem, 1.9vw, 1.7rem);
+  height: clamp(1.2rem, 1.9vw, 1.7rem);
+}
+
+.site-footer__social-link.soundcloud svg {
+  width: clamp(1.4rem, 2.2vw, 2rem);
+  height: clamp(1.4rem, 2.2vw, 2rem);
+  transform: scale(1.25);
+  transform-origin: center;
+}
+
+.site-footer__social:hover .site-footer__social-link {
+  filter: blur(2px);
+}
+
+.site-footer__social-link:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 5px 5px 0px #00000066;
+  filter: none;
+}
+
+.site-footer__social-link.facebook:hover {
+  background: #3b5999;
+}
+
+.site-footer__social-link.instagram:hover {
+  background: #e4405f;
+}
+
+.site-footer__social-link.youtube:hover {
+  background: #c50000;
+}
+
+.site-footer__social-link.soundcloud:hover {
+  background: #ff5709;
+}

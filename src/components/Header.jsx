@@ -20,20 +20,20 @@ function Header() {
   const toggleMenu = () => setMenuAbierto((prev) => !prev);
 
   return (
-    <header>
-      <nav>
-        <div className="logo">
+    <header className="site-header">
+      <nav className="site-nav">
+        <div className="site-nav__logo">
           <h4>IKU</h4>
         </div>
-        <ul className={`nav-links ${menuAbierto ? 'nav-activo' : ''}`}>
+        <ul className={`site-nav__links ${menuAbierto ? 'site-nav__links--open' : ''}`}>
           {navItems.map(({ label, to, href }) => (
-            <li key={label}>
+            <li className="site-nav__item" key={label}>
               {href ? (
-                <a href={href} target="_blank" rel="noreferrer">
+                <a className="site-nav__link" href={href} target="_blank" rel="noreferrer">
                   {label}
                 </a>
               ) : (
-                <NavLink to={to} end={to === '/'}>
+                <NavLink className="site-nav__link" to={to} end={to === '/'}>
                   {label}
                 </NavLink>
               )}
@@ -42,14 +42,14 @@ function Header() {
         </ul>
         <button
           type="button"
-          className={`hamburguesa ${menuAbierto ? 'cambio' : ''}`}
-          aria-label="Alternar menú de navegación"
+          className={`site-nav__toggle ${menuAbierto ? 'site-nav__toggle--open' : ''}`}
+          aria-label="Alternar menu de navegacion"
           aria-expanded={menuAbierto}
           onClick={toggleMenu}
         >
-          <span className="linea1" />
-          <span className="linea2" />
-          <span className="linea3" />
+          <span className="site-nav__line" />
+          <span className="site-nav__line" />
+          <span className="site-nav__line" />
         </button>
       </nav>
     </header>

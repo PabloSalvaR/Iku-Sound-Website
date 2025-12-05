@@ -38,7 +38,7 @@ function Contacto() {
   }, [confirmacionAbierta]);
 
   const renderError = (campo) => (
-    <span className="error" aria-live="polite">
+    <span className="contact__error" aria-live="polite">
       {errores[campo] || '\u00a0'}
     </span>
   );
@@ -62,33 +62,33 @@ function Contacto() {
     if (!datos.nombre.trim()) {
       nuevosErrores.nombre = 'Completa tu nombre.';
     } else if (datos.nombre.trim().length > LIMITES.nombre) {
-      nuevosErrores.nombre = `Máximo ${LIMITES.nombre} caracteres.`;
+      nuevosErrores.nombre = `MÇ­ximo ${LIMITES.nombre} caracteres.`;
     }
     if (!datos.email.trim()) {
       nuevosErrores.email = 'Completa tu email.';
     } else if (datos.email.trim().length > LIMITES.email) {
-      nuevosErrores.email = `Máximo ${LIMITES.email} caracteres.`;
+      nuevosErrores.email = `MÇ­ximo ${LIMITES.email} caracteres.`;
     } else if (!isEmail(datos.email.trim())) {
-      nuevosErrores.email = 'Ingresá un email válido.';
+      nuevosErrores.email = 'IngresÇ­ un email vÇ­lido.';
     }
 
     if (datos.telefono.trim()) {
       const telefono = datos.telefono.replace(/\s+/g, '');
       if (!/^\+?[0-9]{7,16}$/.test(telefono)) {
-        nuevosErrores.telefono = 'Ingresá solo números (y opcional +).';
+        nuevosErrores.telefono = 'IngresÇ­ solo nÇ§meros (y opcional +).';
       } else if (telefono.length > 16) {
-        nuevosErrores.telefono = 'Máximo 16 dígitos.';
+        nuevosErrores.telefono = 'MÇ­ximo 16 dÇðgitos.';
       }
     }
     if (!datos.motivo.trim()) {
       nuevosErrores.motivo = 'Contanos el motivo.';
     } else if (datos.motivo.trim().length > LIMITES.motivo) {
-      nuevosErrores.motivo = `Máximo ${LIMITES.motivo} caracteres.`;
+      nuevosErrores.motivo = `MÇ­ximo ${LIMITES.motivo} caracteres.`;
     }
     if (!datos.mensaje.trim()) {
       nuevosErrores.mensaje = 'Contanos tu mensaje.';
     } else if (datos.mensaje.trim().length > LIMITES.mensaje) {
-      nuevosErrores.mensaje = `Máximo ${LIMITES.mensaje} caracteres.`;
+      nuevosErrores.mensaje = `MÇ­ximo ${LIMITES.mensaje} caracteres.`;
     }
     return nuevosErrores;
   };
@@ -122,16 +122,16 @@ function Contacto() {
       if (!respuesta.ok) {
         const data = await respuesta.json().catch(() => null);
         const mensaje =
-          data?.errores?.join(' ') || 'No pudimos enviar tu mensaje. Probá nuevamente.';
+          data?.errores?.join(' ') || 'No pudimos enviar tu mensaje. ProbÇ­ nuevamente.';
         toast.error(mensaje);
         return;
       }
 
-      toast.success('¡Gracias por tu mensaje! Te contactaremos a la brevedad.');
+      toast.success('¶­Gracias por tu mensaje! Te contactaremos a la brevedad.');
       setDatos(initialState);
     } catch (error) {
       console.error('Error al enviar el formulario', error);
-      toast.error('Ocurrió un error inesperado. Intentá más tarde.');
+      toast.error('OcurriÇü un error inesperado. IntentÇ­ mÇ­s tarde.');
     } finally {
       setEnviando(false);
       setConfirmacionAbierta(false);
@@ -139,14 +139,14 @@ function Contacto() {
   };
 
   return (
-    <section id="contacto">
-      <h1>Contacto</h1>
-      <div className="contenedor">
-        <div className="contact-wrapper animated bounceInUp">
-          <div className="contact-form">
-            <h3>Dejanos tu consulta:</h3>
-            <form id="form" onSubmit={handleSubmit} noValidate>
-              <p>
+    <section id="contacto" className="contact">
+      <h1 className="contact__title">Contacto</h1>
+      <div className="contact__container">
+        <div className="contact__wrapper">
+          <div className="contact__form">
+            <h3 className="contact__form-title">Dejanos tu consulta:</h3>
+            <form id="form" className="contact__fields" onSubmit={handleSubmit} noValidate>
+              <p className="contact__field">
                 <label htmlFor="nombre">Nombre*</label>
                 <input
                   type="text"
@@ -158,7 +158,7 @@ function Contacto() {
                 />
                 {renderError('nombre')}
               </p>
-              <p>
+              <p className="contact__field">
                 <label htmlFor="email">Email*</label>
                 <input
                   type="email"
@@ -170,8 +170,8 @@ function Contacto() {
                 />
                 {renderError('email')}
               </p>
-              <p>
-                <label htmlFor="telefono">Teléfono</label>
+              <p className="contact__field">
+                <label htmlFor="telefono">TelÇ¸fono</label>
                 <input
                   type="tel"
                   id="telefono"
@@ -182,7 +182,7 @@ function Contacto() {
                 />
                 {renderError('telefono')}
               </p>
-              <p>
+              <p className="contact__field">
                 <label htmlFor="motivo">Motivo*</label>
                 <input
                   type="text"
@@ -194,7 +194,7 @@ function Contacto() {
                 />
                 {renderError('motivo')}
               </p>
-              <p className="block">
+              <p className="contact__field contact__field--full">
                 <label htmlFor="mensaje">Mensaje*</label>
                 <textarea
                   id="mensaje"
@@ -206,16 +206,17 @@ function Contacto() {
                 />
                 {renderError('mensaje')}
               </p>
-              <p className="block">
+              <p className="contact__field contact__field--full">
                 <button id="btn_enviar" type="submit" disabled={enviando}>
                   {enviando ? 'Enviando...' : 'Enviar'}
                 </button>
               </p>
             </form>
           </div>
-          <div className="contact-info">
+          <div className="contact__info">
             <h4>Nos encontramos en:</h4>
             <iframe
+              className="contact__map"
               title="Mapa IKU Sound"
               src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d9286.998799555759!2d-58.44173832197969!3d-34.618069011309345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sar!4v1635037255551!5m2!1ses!2sar"
               width="600"
@@ -225,7 +226,7 @@ function Contacto() {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
-            <ul>
+            <ul className="contact__info-list">
               <li>
                 <FaMapMarkerAlt /> CABA
               </li>
@@ -235,11 +236,11 @@ function Contacto() {
         </div>
       </div>
       {confirmacionAbierta && (
-        <div className="modal-overlay" role="dialog" aria-modal="true">
-          <div className="modal-content">
-            <h3>¿Enviar mensaje?</h3>
-            <p>Revisá que los datos sean correctos antes de enviar:</p>
-            <ul className="modal-summary">
+        <div className="contact__modal-overlay" role="dialog" aria-modal="true">
+          <div className="contact__modal">
+            <h3>¶¨Enviar mensaje?</h3>
+            <p>RevisÇ­ que los datos sean correctos antes de enviar:</p>
+            <ul className="contact__summary">
               <li>
                 <strong>Nombre:</strong> {datosPendientes.nombre || 'Sin especificar'}
               </li>
@@ -251,16 +252,16 @@ function Contacto() {
               </li>
             </ul>
             {enviando && (
-              <div className="modal-loader" aria-live="polite">
-                <span className="spinner" aria-hidden="true" /> Enviando mensaje...
+              <div className="contact__loader" aria-live="polite">
+                <span className="contact__spinner" aria-hidden="true" /> Enviando mensaje...
               </div>
             )}
-            <div className="modal-actions">
-              <button type="button" className="btn-secondary" onClick={cerrarConfirmacion} disabled={enviando}>
+            <div className="contact__actions">
+              <button type="button" className="btn btn--secondary" onClick={cerrarConfirmacion} disabled={enviando}>
                 Cancelar
               </button>
-              <button type="button" className="btn-primary" onClick={enviarFormulario} disabled={enviando}>
-                {enviando ? 'Enviando…' : 'Confirmar'}
+              <button type="button" className="btn btn--primary" onClick={enviarFormulario} disabled={enviando}>
+                {enviando ? 'Enviandoƒ?Ý' : 'Confirmar'}
               </button>
             </div>
           </div>

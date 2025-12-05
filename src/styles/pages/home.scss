@@ -1,0 +1,57 @@
+.home {
+  background-image: url('/img/studio_art_blue.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  background-attachment: fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  font-family: 'Spartan', sans-serif;
+  font-size: large;
+  font-weight: bold;
+  color: #cfcfcf;
+  user-select: none;
+  overflow: hidden;
+  padding: var(--content-padding) 5vw;
+
+  &__logo {
+    display: flex;
+    width: 200px;
+    height: 200px;
+    opacity: 0.8;
+    margin-top: 2vh;
+    margin-bottom: 30px;
+  }
+
+  &__title {
+    color: #fff;
+    opacity: 0.8;
+    letter-spacing: 5px;
+  }
+
+  &__subtitle {
+    margin-top: 10px;
+    letter-spacing: 3px;
+  }
+
+  &__description {
+    margin-top: 20px;
+    width: 50vw;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .home {
+    min-height: calc(100vh - var(--header-height));
+    height: auto;
+    padding: 6rem 1.5rem 3rem;
+    background-attachment: scroll;
+  }
+}

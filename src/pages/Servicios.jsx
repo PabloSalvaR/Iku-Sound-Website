@@ -33,13 +33,13 @@ const servicios = [
 
 function Servicios() {
   return (
-    <section id="servicios">
-      <h1>Servicios</h1>
-      <div className="servicios-grid">
+    <section id="servicios" className="services">
+      <h1 className="services__title">Servicios</h1>
+      <div className="services__grid">
         {servicios.map(({ id, titulo, descripcion, imagen, alt }) => (
-          <article className="servicio-card" key={id}>
-            <img src={imagen} alt={alt} />
-            <div className="servicio-texto">
+          <article className="services__card" key={id}>
+            <img src={imagen} alt={alt} className="services__image" />
+            <div className="services__text">
               <h3>{titulo}</h3>
               {descripcion}
             </div>

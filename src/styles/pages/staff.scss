@@ -1,0 +1,188 @@
+.staff {
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  background-image: url('/img/consola_fondo.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-attachment: fixed;
+  padding: var(--content-padding) 5vw 5vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+
+  &__title {
+    align-self: center;
+    margin: 0 0 0.5rem;
+    font-family: 'Spartan', sans-serif;
+    font-weight: 700;
+    opacity: 0.8;
+    font-size: 50px;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  &__panel {
+    position: relative;
+    width: 560px;
+    max-width: 92vw;
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+  }
+
+  &__image {
+    width: 100%;
+    display: block;
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2rem 2.2rem 2.5rem;
+    border-radius: 20px;
+    color: #cfcfcf;
+    font-family: 'Spartan', sans-serif;
+    text-align: left;
+  }
+
+  &__name {
+    font-size: clamp(1.35rem, 4vw, 2rem);
+    margin-bottom: 1rem;
+  }
+
+  &__bio {
+    font-size: clamp(0.95rem, 3.4vw, 1.05rem);
+    line-height: 1.55;
+    font-weight: 700;
+  }
+
+  &__photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__portrait {
+    max-width: 500px;
+    max-height: 500px;
+    border-radius: 450px;
+    opacity: 0.9;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+  }
+}
+
+@media screen and (max-width: 1054px) {
+  .staff {
+    &__image {
+      width: 100%;
+      max-width: none;
+    }
+
+    &__portrait {
+      width: min(100%, 360px);
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .staff {
+    min-height: auto;
+    height: auto;
+    padding: 6rem 1.5rem 3rem;
+    background-attachment: scroll;
+
+    &__content {
+      gap: 2rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .staff {
+    padding: 5vh 1.5rem 3rem;
+
+    &__content {
+      flex-direction: column;
+    }
+
+    &__overlay {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 360px;
+      padding: 1.2rem 1.4rem 1.5rem;
+      background: rgba(0, 0, 0, 0.8);
+      text-align: center;
+    }
+
+    &__portrait {
+      width: 80%;
+      max-width: 320px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .staff {
+    &__panel {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    &__image {
+      min-height: 320px;
+      object-fit: cover;
+    }
+
+    &__overlay {
+      width: 80%;
+      max-width: 280px;
+      padding: 0.85rem 1rem 1rem;
+      border-radius: 16px;
+    }
+
+    &__name {
+      font-size: 1.1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    &__bio {
+      font-size: 0.85rem;
+      line-height: 1.35;
+    }
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .staff {
+    &__panel {
+      max-width: none;
+    }
+
+    &__overlay {
+      width: 72%;
+      max-width: 240px;
+      padding: 0.7rem 0.85rem 0.85rem;
+    }
+
+    &__name {
+      font-size: 1rem;
+    }
+
+    &__bio {
+      font-size: 0.8rem;
+      line-height: 1.3;
+    }
+  }
+}

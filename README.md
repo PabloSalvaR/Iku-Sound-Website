@@ -3,7 +3,7 @@
 Sitio web estatico para IKU Sound, un homestudio enfocado en grabacion, mezcla y masterizacion. El proyecto es una SPA en React + Vite y se sirve a traves de un Cloudflare Worker que tambien publica un endpoint para el formulario de contacto.
 
 ## Arquitectura
-- **Frontend:** React 18 con React Router 6. Las paginas (`/`, `/servicios`, `/staff`, `/contacto`) comparten un layout con `Header` y `Footer`, mas los estilos originales portados a `src/styles/estilos.css`.
+- **Frontend:** React 18 con React Router 6. Las paginas (`/`, `/servicios`, `/staff`, `/contacto`) comparten un layout con `Header` y `Footer`. Los estilos ahora estan modularizados en SCSS con BEM: `src/styles/main.scss` importa parciales por pagina (`src/styles/pages/*.scss`) y componentes (`src/styles/components/*.scss`). La entrada usa `@use` y se compila con `sass-embedded`.
 - **Backend / Edge:** `worker.js` corre en Cloudflare Workers, sirve los assets generados (`env.ASSETS`) y hace fallback a `index.html` para las rutas del SPA. Tambien maneja `POST /api/contacto`.
 - **Formulario de contacto:** componente controlado (`src/pages/Contacto.jsx`) con validaciones en front y back. Los limites sincronizados son: nombre 40, email 60, telefono 16, motivo 50 y mensaje 500. El worker sanitiza y reenvia los datos via Resend (`RESEND_KEY`).
 - **Notificaciones y UI extra:** `sonner` para toasts, `react-icons` para iconos y un modal de confirmacion antes de enviar.
@@ -36,7 +36,12 @@ public/                # imagenes y assets estaticos
 src/
   components/          # Header, Footer, Layout
   pages/               # Home, Servicios, Staff, Contacto
-  styles/              # estilos.css
+  styles/
+    base.scss          # resets y variables root
+    components/        # header, footer
+    pages/             # home, servicios, staff, contacto
+    utilities/         # animaciones
+    main.scss          # punto de entrada que usa los parciales
   App.jsx              # rutas y layout principal
 worker.js              # Cloudflare Worker + API contacto
 vite.config.js         # configuracion de Vite
