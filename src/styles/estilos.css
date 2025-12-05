@@ -694,7 +694,13 @@ footer nav {
     min-height: auto;
   }
 
-  #inicio,
+  #inicio {
+    min-height: calc(100vh - var(--header-height));
+    height: auto;
+    padding: 6rem 1.5rem 3rem;
+    background-attachment: scroll;
+  }
+
   #servicios,
   #staff,
   #contacto {
@@ -770,6 +776,14 @@ footer nav {
   }
 
   .staff-text {
+    top: 50%;
+    bottom: auto;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 360px;
+    padding: 1.2rem 1.4rem 1.5rem;
+    background: rgba(0, 0, 0, 0.8);
     text-align: center;
   }
 
@@ -785,6 +799,20 @@ footer nav {
   .contact-wrapper {
     display: flex;
     flex-direction: column;
+  }
+
+  .contact-form form {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form form .block {
+    grid-column: auto;
+  }
+
+  .contact-form form button {
+    width: 100%;
+    max-width: 320px;
+    justify-self: center;
   }
 }
 
