@@ -64,12 +64,12 @@ function Contacto() {
   const validar = () => {
     const nuevosErrores = {};
     if (!datos.nombre.trim()) {
-      nuevosErrores.nombre = 'Completa tu nombre.';
+      nuevosErrores.nombre = 'Completá tu nombre.';
     } else if (datos.nombre.trim().length > LIMITES.nombre) {
       nuevosErrores.nombre = `Máximo ${LIMITES.nombre} caracteres.`;
     }
     if (!datos.email.trim()) {
-      nuevosErrores.email = 'Completa tu email.';
+      nuevosErrores.email = 'Completá tu email.';
     } else if (datos.email.trim().length > LIMITES.email) {
       nuevosErrores.email = `Máximo ${LIMITES.email} caracteres.`;
     } else if (!isEmail(datos.email.trim())) {
@@ -210,7 +210,7 @@ function Contacto() {
                 />
                 {renderError('mensaje')}
               </p>
-              <p className="contact__field contact__field--full">
+              <p className="contact__field contact__field--actions">
                 <button id="btn_enviar" type="submit" disabled={enviando}>
                   {enviando ? 'Enviando...' : 'Enviar'}
                 </button>
@@ -235,7 +235,7 @@ function Contacto() {
                 <FaMapMarkerAlt /> CABA
               </li>
             </ul>
-            <p>Completa el formulario y te responderemos por correo.</p>
+            <p>Completá el formulario y te responderemos por correo.</p>
           </div>
         </div>
       </div>

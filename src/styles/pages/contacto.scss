@@ -82,25 +82,30 @@
         min-height: 120px;
       }
 
-      button {
-        background: #1f4d1f;
-        color: #f0f0f0;
-        border: 0;
-        padding: 1em;
-        width: 10rem;
-        font-family: 'Spartan', sans-serif;
-        font-weight: 600;
-        font-size: 0.95rem;
-        letter-spacing: 2px;
-        border-radius: 999px;
-        cursor: pointer;
-        transition: background 0.25s ease;
+      .contact__field--actions {
+        display: flex;
+        justify-content: flex-start;
 
-        &:hover,
-        &:focus {
-          background: #2f6d2f;
-          color: #ffffff;
-          outline: none;
+        button {
+          background: #1f4d1f;
+          color: #f0f0f0;
+          border: 0;
+          padding: 1em;
+          width: 10rem;
+          font-family: 'Spartan', sans-serif;
+          font-weight: 600;
+          font-size: 0.95rem;
+          letter-spacing: 2px;
+          border-radius: 999px;
+          cursor: pointer;
+          transition: background 0.25s ease;
+
+          &:hover,
+          &:focus {
+            background: #2f6d2f;
+            color: #ffffff;
+            outline: none;
+          }
         }
       }
     }
@@ -292,6 +297,15 @@
 
       .contact__field--full {
         grid-column: auto;
+      }
+
+      .contact__field--actions {
+        justify-content: center;
+
+        button {
+          width: 100%;
+          max-width: 320px;
+        }
       }
 
       button {
