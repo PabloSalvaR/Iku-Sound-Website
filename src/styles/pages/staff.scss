@@ -1,6 +1,11 @@
 .staff {
   min-height: calc(100vh - var(--header-height) - var(--footer-height));
   background-image: url('/img/consola_fondo.jpg');
+  background-image: image-set(
+    url('/img/consola_fondo-desktop.avif') type('image/avif'),
+    url('/img/consola_fondo-desktop.webp') type('image/webp'),
+    url('/img/consola_fondo.jpg') type('image/jpeg')
+  );
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top center;
@@ -106,6 +111,12 @@
     height: auto;
     padding: 6rem 1.5rem 3rem;
     background-attachment: scroll;
+    background-image: url('/img/consola_fondo.jpg');
+    background-image: image-set(
+      url('/img/consola_fondo-mobile.avif') type('image/avif'),
+      url('/img/consola_fondo-mobile.webp') type('image/webp'),
+      url('/img/consola_fondo.jpg') type('image/jpeg')
+    );
 
     &__content {
       gap: 2rem;

@@ -1,10 +1,7 @@
-import { FaFacebookF, FaInstagram, FaYoutube, FaSoundcloud } from 'react-icons/fa';
+import { FaSoundcloud } from 'react-icons/fa';
 import packageJson from '../../package.json';
 
 const redes = [
-  { label: 'facebook', href: null, icon: <FaFacebookF /> },
-  { label: 'instagram', href: null, icon: <FaInstagram /> },
-  { label: 'youtube', href: null, icon: <FaYoutube /> },
   { label: 'soundcloud', href: 'https://soundcloud.com/ikusoundstudio', icon: <FaSoundcloud /> }
 ];
 

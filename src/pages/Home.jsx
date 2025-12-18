@@ -5,6 +5,8 @@ function Home() {
         src="/img/iku_logo_white.png"
         alt="Logo IKU Sound"
         className="home__logo"
+        width="826"
+        height="833"
         draggable="false"
         onDragStart={(event) => event.preventDefault()}
       />

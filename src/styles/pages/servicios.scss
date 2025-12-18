@@ -4,6 +4,11 @@
   padding: var(--content-padding) 5vw;
   box-sizing: border-box;
   background-image: url('/img/textura_fondo.jpg');
+  background-image: image-set(
+    url('/img/textura_fondo-desktop.avif') type('image/avif'),
+    url('/img/textura_fondo-desktop.webp') type('image/webp'),
+    url('/img/textura_fondo.jpg') type('image/jpeg')
+  );
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -78,6 +83,12 @@
     height: auto;
     padding: 6rem 1.5rem 3rem;
     background-attachment: scroll;
+    background-image: url('/img/textura_fondo.jpg');
+    background-image: image-set(
+      url('/img/textura_fondo-mobile.avif') type('image/avif'),
+      url('/img/textura_fondo-mobile.webp') type('image/webp'),
+      url('/img/textura_fondo.jpg') type('image/jpeg')
+    );
   }
 
   .services__card {
